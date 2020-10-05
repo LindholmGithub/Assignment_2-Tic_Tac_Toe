@@ -54,12 +54,10 @@ public class GameBoardTwoPlayer implements IGameModel {
         {
             winner = nextPlayer;
         }
-
         if(nextPlayer == 0)
         {
             nextPlayer = 1;
-        }
-        else {
+        } else {
             nextPlayer = 0;
         }
         return true;
@@ -76,11 +74,8 @@ public class GameBoardTwoPlayer implements IGameModel {
         if (checkWinner() || gameDraw())
         {
             return true;
-
         } else {
-
             return false;
-
         }
     }
 
@@ -139,21 +134,24 @@ public class GameBoardTwoPlayer implements IGameModel {
                return true;
            }
         }
+
         // Loop der tjekker columns. Hvis der er 3 af de samme symboler ved siden af hinanden på Y-axen,
         // returner den true.
-        for (int r = 0; r < BOARD_SIZE;r++)
+        for (int r = 0; r < BOARD_SIZE -1;r++)
         {
             if (boardSize[r][0] == boardSize[r][1] && boardSize[r][1] == boardSize[r][2] && boardSize[r][0] != MINUS_ET)
             {
                 return true;
             }
         }
-        // Loop der tjekker diagonalt mod højre.
 
-
+        // Loop der tjekker om der er 3 på stribe diagonalt.
+        //
+        if(boardSize[0][0] == boardSize[1][1] && boardSize[1][1] == boardSize[2][2]
+                || boardSize[2][0] == boardSize[1][1] && boardSize[1][1] == boardSize[0][2]){
+            return true;
+        }
 
         return false;
-
     }
-
 }
