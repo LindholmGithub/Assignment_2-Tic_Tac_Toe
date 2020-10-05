@@ -1,14 +1,24 @@
 package tictactoe.bll;
 
+import java.awt.*;
+
 /**
  * The GameBoardTwoPlayer class is the mandatory implementation for the TicTacToe assignment.
  * It is used for games where there are two human players.
  */
 public class GameBoardTwoPlayer implements IGameModel {
+    private static final int MINUS_ET = -1;
+    private static final int BOARD_SIZE = 3;
 
-    protected GameBoardTwoPlayer() {
+    private int winner = -1;
+    private int nextPlayer = 0;
+    private int[][] boardSize = new int[BOARD_SIZE][BOARD_SIZE];
 
+    public GameBoardTwoPlayer()
+    {
+        newGame();
     }
+
 
     /**
      * Returns 0 for player 0, 1 for player 1.
@@ -17,12 +27,11 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public int getNextPlayer() {
-        //TODO Implement this method
-        return 0;
+        return nextPlayer;
     }
 
     /**
-     * Attempts to let the current player play at the given coordinates. It the
+     * Attempts to let the current player play at the given coordinates. If the
      * attempt is successful the current player has ended his turn and it is the
      * next players turn.
      *
@@ -32,8 +41,27 @@ public class GameBoardTwoPlayer implements IGameModel {
      * true this method will always return false.
      */
     @Override
-    public boolean play(int col, int row) {
-        //TODO Implement this method
+    public boolean play(int col, int row)
+    {
+        if (isGameOver() || boardSize[col][row] != MINUS_ET)
+        {
+            return false;
+        }
+
+        boardSize[col][row] = nextPlayer;
+
+        if (checkWinner())
+        {
+            winner = nextPlayer;
+        }
+
+        if(nextPlayer == 0)
+        {
+            nextPlayer = 1;
+        }
+        else {
+            nextPlayer = 0;
+        }
         return true;
     }
 
@@ -41,12 +69,19 @@ public class GameBoardTwoPlayer implements IGameModel {
      * Tells us if the game has ended either by draw or by meeting the winning
      * condition.
      *
-     * @return true if the game is over, else it will retun false.
+     * @return true if the game is over, else it will return false.
      */
     @Override
     public boolean isGameOver() {
-        //TODO Implement this method
-        return false;
+        if (checkWinner() || gameDraw())
+        {
+            return true;
+
+        } else {
+
+            return false;
+
+        }
     }
 
     /**
@@ -56,16 +91,69 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public int getWinner() {
-        //TODO Implement this method
-        return -1;
+        return winner;
     }
 
+    private boolean gameDraw()
+    {
+        for (int c = 0; c < boardSize.length;c++)
+        {
+            for (int r = 0; r < boardSize[c].length;r++)
+            {
+                if (boardSize[c][r] == MINUS_ET)
+                {
+                    return false;
+                }
+            }
+        }
+        return true;
+    }
     /**
      * Resets the game to a new game state.
      */
     @Override
     public void newGame() {
-        //TODO Implement this method
+        for (int c = 0; c < boardSize.length;c++)
+        {
+            for (int r = 0; r < boardSize[c].length;r++)
+            {
+                boardSize[c][r] = MINUS_ET;
+            }
+        }
+        nextPlayer = 0;
+        winner = -1;
+    }
+
+    /**
+     * Boolean that checks if any player has 3 in a row in any direction.
+     * @return true if 3 of the same symbols are next to each other. Otherwise false.
+     */
+    public boolean checkWinner()
+    {
+        // Loop der tjekker rows. Hvis der er 3 af de samme symboler ved siden af hinanden på X-axen,
+        // returner den true.
+        for (int c = 0; c < BOARD_SIZE;c++)
+        {
+           if (boardSize[0][c] == boardSize[1][c] && boardSize[1][c] == boardSize[2][c] && boardSize[0][c] != MINUS_ET)
+           {
+               return true;
+           }
+        }
+        // Loop der tjekker columns. Hvis der er 3 af de samme symboler ved siden af hinanden på Y-axen,
+        // returner den true.
+        for (int r = 0; r < BOARD_SIZE;r++)
+        {
+            if (boardSize[r][0] == boardSize[r][1] && boardSize[r][1] == boardSize[r][2] && boardSize[r][0] != MINUS_ET)
+            {
+                return true;
+            }
+        }
+        // Loop der tjekker diagonalt mod højre.
+
+
+
+        return false;
+
     }
 
 }
