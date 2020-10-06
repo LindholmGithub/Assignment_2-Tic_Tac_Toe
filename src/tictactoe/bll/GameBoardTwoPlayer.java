@@ -13,6 +13,7 @@ public class GameBoardTwoPlayer implements IGameModel {
     private int winner = -1;
     private int nextPlayer = 0;
     private int[][] boardSize = new int[BOARD_SIZE][BOARD_SIZE];
+    private char[][] boardSizeTwo = new char[3][3];
 
     public GameBoardTwoPlayer()
     {
@@ -121,37 +122,42 @@ public class GameBoardTwoPlayer implements IGameModel {
 
     /**
      * Boolean that checks if any player has 3 in a row in any direction.
+     * [0,0  0,1  0,2]
+     * [1,0  1,1  1,2]
+     * [2,0  2,1  2,2]
      * @return true if 3 of the same symbols are next to each other. Otherwise false.
      */
     public boolean checkWinner()
     {
-        // Loop der tjekker rows. Hvis der er 3 af de samme symboler ved siden af hinanden på X-axen,
+        // Loop der tjekker columns. Hvis der er 3 af de samme symboler ved siden af hinanden på X-axen,
         // returner den true.
         for (int c = 0; c < BOARD_SIZE;c++)
         {
-           if (boardSize[0][c] == boardSize[1][c] && boardSize[1][c] == boardSize[2][c] && boardSize[0][c] != MINUS_ET)
+           if ((boardSize[0][c] == boardSize[1][c]) && (boardSize[1][c] == boardSize[2][c]) && boardSize[2][c] != MINUS_ET)
            {
                return true;
            }
         }
 
-        // Loop der tjekker columns. Hvis der er 3 af de samme symboler ved siden af hinanden på Y-axen,
+        // Loop der tjekker rows. Hvis der er 3 af de samme symboler ved siden af hinanden på Y-axen,
         // returner den true.
-        for (int r = 0; r < BOARD_SIZE -1;r++)
+        for (int r = 0; r < BOARD_SIZE;r++)
         {
             if (boardSize[r][0] == boardSize[r][1] && boardSize[r][1] == boardSize[r][2] && boardSize[r][0] != MINUS_ET)
             {
                 return true;
             }
         }
-
-        // Loop der tjekker om der er 3 på stribe diagonalt.
+        // If command der tjekker diagonalt om der er 3 på stribe.
         //
-        if(boardSize[0][0] == boardSize[1][1] && boardSize[1][1] == boardSize[2][2]
-                || boardSize[2][0] == boardSize[1][1] && boardSize[1][1] == boardSize[0][2]){
+
+        if(boardSize[0][0] == boardSize[1][1] && boardSize[1][1] == boardSize[2][2] && boardSize[0][0] != MINUS_ET
+                || boardSize[2][0] == boardSize[1][1] && boardSize[1][1] == boardSize[0][2] && boardSize[2][0] != MINUS_ET)
+        {
             return true;
         }
-
-        return false;
+        else {
+            return false;
+        }
     }
 }
