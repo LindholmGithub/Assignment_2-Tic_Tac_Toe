@@ -5,6 +5,8 @@
  */
 package tictactoe.gui.controller;
 
+import javafx.beans.Observable;
+import javafx.collections.ObservableList;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
 import javafx.fxml.Initializable;
@@ -89,6 +91,26 @@ public class TicTacViewController implements Initializable {
                 else {
                     setPlayer();
                 }
+
+                ObservableList<Node> buttons = gridPane.getChildren();
+                for (Node node: buttons)
+                {
+                    row = GridPane.getRowIndex(node);
+                    col = GridPane.getColumnIndex(node);
+                    r = (row == null) ? 0 : row;
+                    c = (col == null) ? 0 : col;
+                    int value = game.getPlayerAt(c, r);
+                    if(value != -1)
+                    {
+                        btn = (Button) node;
+                        xOrO = value == 0 ? "X" : "O";
+                        btn.setText(xOrO);
+                    }
+                }
+
+
+
+
             }
         } catch (Exception e) {
             e.printStackTrace();

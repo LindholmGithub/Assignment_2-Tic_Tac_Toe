@@ -117,6 +117,11 @@ public class GameBoardTwoPlayer implements IGameModel {
         winner = -1;
     }
 
+    @Override
+    public int getPlayerAt(int c2, int r2) {
+        return boardSize[c2][r2];
+    }
+
     /**
      * Boolean that checks if any player has 3 in a row in any direction.
      * [0,0  0,1  0,2]

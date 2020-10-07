@@ -50,4 +50,12 @@ public interface IGameModel
      * Resets the game to a new game state.
      */
     void newGame();
+
+    /**
+     * Returns the stored player value at the given coordinate.
+     * @param c2 The column to look at
+     * @param r2 The row to look at
+     * @return 0 for player 0, 1 for player 1, and -1 if no player has played the field.
+     */
+    int getPlayerAt(int c2, int r2);
 }

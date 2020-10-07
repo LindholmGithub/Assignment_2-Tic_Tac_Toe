@@ -1,15 +1,22 @@
 package tictactoe.bll;
 
+import java.util.Random;
+
 /**
  * The GameBoardSinglePlayer class is the optional and advanced implementation for the TicTacToe assignment.
  * It is used for games where there are one human player vs. a computer player.
  */
 public class GameBoardSinglePlayer implements IGameModel {
+
     private static final int MINUS_ET = -1;
     private static final int BOARD_SIZE = 3;
+    private static final int COMPUTER_PLAYER = 1;
 
     private int winner = -1;
     private int nextPlayer = 0;
+
+
+
     private int[][] boardSize = new int[BOARD_SIZE][BOARD_SIZE];
 
 
@@ -49,20 +56,35 @@ public class GameBoardSinglePlayer implements IGameModel {
         if (checkWinner())
         {
             winner = nextPlayer;
-        }
-        else {
-            computerMove();
 
+        } else if (!isGameOver()) {
+            computerMove();
+            if (checkWinner())
+            {
+                winner = COMPUTER_PLAYER;
+
+            }
         }
         return true;
     }
 
     /**
-     *  Makes the AI do stuff.
+     *  Makes the AI check for the first available empty field.
      */
+
     private void computerMove()
     {
-        System.out.println("Hej");
+        for (int c = 0; c < boardSize.length;c++)
+        {
+            for (int r = 0; r < boardSize[c].length;r++)
+            {
+                if (boardSize[c][r] == MINUS_ET)
+                {
+                    boardSize[c][r] = COMPUTER_PLAYER;
+                    return;
+                }
+            }
+        }
     }
 
     /**
@@ -120,6 +142,11 @@ public class GameBoardSinglePlayer implements IGameModel {
         }
         nextPlayer = 0;
         winner = -1;
+    }
+
+    @Override
+    public int getPlayerAt(int c2, int r2) {
+        return boardSize[c2][r2];
     }
 
     /**
