@@ -84,8 +84,9 @@ public class TicTacViewController implements Initializable {
                 if (game.isGameOver()) {
                     int winner = game.getWinner();
                     displayWinner(winner);
-                    scoreModel.setNextWinner(xOrO);
-                } else {
+                    scoreModel.setNextWinner(winner + "");
+                }
+                else {
                     setPlayer();
                 }
             }

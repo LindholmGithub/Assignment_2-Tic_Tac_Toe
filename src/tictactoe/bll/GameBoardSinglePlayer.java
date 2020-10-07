@@ -33,8 +33,28 @@ public class GameBoardSinglePlayer implements IGameModel {
      */
     @Override
     public boolean play(int col, int row) {
-        //TODO Implement this method
+        boolean isValidMove = true;
+        if(isValidMove)
+        {
+            //TODO Place human players move
+            //TODO Check if human won?
+            //If not:
+            computerMove();
+
+        }
+        else
+            {
+            return false;
+        }
         return false;
+    }
+
+    /**
+     *
+     */
+    private void computerMove()
+    {
+
     }
 
     /**

@@ -1,7 +1,5 @@
 package tictactoe.bll;
 
-import java.awt.*;
-
 /**
  * The GameBoardTwoPlayer class is the mandatory implementation for the TicTacToe assignment.
  * It is used for games where there are two human players.
@@ -13,7 +11,6 @@ public class GameBoardTwoPlayer implements IGameModel {
     private int winner = -1;
     private int nextPlayer = 0;
     private int[][] boardSize = new int[BOARD_SIZE][BOARD_SIZE];
-    private char[][] boardSizeTwo = new char[3][3];
 
     public GameBoardTwoPlayer()
     {
@@ -72,7 +69,7 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     @Override
     public boolean isGameOver() {
-        if (checkWinner() || gameDraw())
+        if (checkWinner() || isGameDraw())
         {
             return true;
         } else {
@@ -90,7 +87,7 @@ public class GameBoardTwoPlayer implements IGameModel {
         return winner;
     }
 
-    private boolean gameDraw()
+    private boolean isGameDraw()
     {
         for (int c = 0; c < boardSize.length;c++)
         {
@@ -129,7 +126,7 @@ public class GameBoardTwoPlayer implements IGameModel {
      */
     public boolean checkWinner()
     {
-        // Loop der tjekker columns. Hvis der er 3 af de samme symboler ved siden af hinanden på X-axen,
+        // Loop der tjekker columns. Hvis der er 3 af de samme symboler ved siden af hinanden på Y-axen,
         // returner den true.
         for (int c = 0; c < BOARD_SIZE;c++)
         {
@@ -138,8 +135,7 @@ public class GameBoardTwoPlayer implements IGameModel {
                return true;
            }
         }
-
-        // Loop der tjekker rows. Hvis der er 3 af de samme symboler ved siden af hinanden på Y-axen,
+        // Loop der tjekker rows. Hvis der er 3 af de samme symboler ved siden af hinanden på X-axen,
         // returner den true.
         for (int r = 0; r < BOARD_SIZE;r++)
         {
@@ -149,8 +145,6 @@ public class GameBoardTwoPlayer implements IGameModel {
             }
         }
         // If command der tjekker diagonalt om der er 3 på stribe.
-        //
-
         if(boardSize[0][0] == boardSize[1][1] && boardSize[1][1] == boardSize[2][2] && boardSize[0][0] != MINUS_ET
                 || boardSize[2][0] == boardSize[1][1] && boardSize[1][1] == boardSize[0][2] && boardSize[2][0] != MINUS_ET)
         {
